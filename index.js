@@ -80,3 +80,34 @@ dataArea.onkeyup = realtime;
 
 update();
 changeFontSize();
+
+function toggleChat() {
+    const chatContainer = document.getElementById('chat-container');
+    chatContainer.style.display = chatContainer.style.display === 'none' ? 'block' : 'none';
+}
+
+function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const messagesDiv = document.getElementById('chat-messages');
+    const message = input.value.trim();
+
+    if (!message) return;
+
+    // Add user message
+    messagesDiv.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+    input.value = '';
+
+    // For now, just echo the message
+    messagesDiv.innerHTML += `<p><strong>AI:</strong> You said: ${message}</p>`;
+
+    // Scroll to bottom
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+// Add event listener for Enter key
+document.getElementById('chat-input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault(); // Prevent default newline
+        sendMessage();
+    }
+});
