@@ -3,6 +3,33 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import uvicorn
 import html
+import json
+
+from litellm import completion
+import os
+
+SYSTEM_PROMPT = """
+You are answering questions to a user using html.
+You will respond using valid html code.
+Your code gets rendered in real time to a user.
+It should be helpful and contain the answer to their question.
+You might also be given context, include the context in the html.
+Do not include any other text than the html. Do not add ```html or ```.
+The html will be directly rendered to the user.
+Include any css in the html directly.
+"""
+
+def get_response(message, raw_html):
+    response = completion(
+        model="openai/gpt-4o-mini",
+        messages=[
+            {"content": SYSTEM_PROMPT, "role": "system"},
+            {"content": raw_html,"role": "assistant"},
+            {"content": message,"role": "user"},
+        ],
+        stream=True,
+    )
+    return response
 
 app = FastAPI()
 
@@ -27,11 +54,28 @@ async def websocket_endpoint(websocket: WebSocket):
             # Receive message from client
             data = await websocket.receive_text()
 
-            # Process the message (you can add your HTML generation logic here)
-            response_html = f"<div class='message'>{html.escape(data)}</div>"
+            # Parse the JSON payload
+            payload = json.loads(data)
+            message = payload['message']
+            raw_html = payload['html']
+            history = payload.get('history', [])  # Get conversation history
+
+            # Get response using the message, raw HTML, and history
+            response = completion(
+                model="openai/gpt-4o-mini",
+                messages=[
+                    {"content": SYSTEM_PROMPT, "role": "system"},
+                    *history,  # Include previous conversation
+                    {"content": raw_html, "role": "assistant"},
+                    {"content": message, "role": "user"},
+                ],
+                stream=True,
+            )
 
             # Send response back to client
-            await websocket.send_text(response_html)
+            for chunk in response:
+                if chunk.choices[0].delta.content:
+                    await websocket.send_text(chunk.choices[0].delta.content)
 
     except Exception as e:
         print(f"Error: {e}")
