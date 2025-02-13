@@ -46,27 +46,13 @@
 </html></textarea>
 
         <div class=controls>
-            <label>
-                <input type=checkbox id=realtime onclick="update()" checked>
-                Realtime
-            </label> |
             <select id="layout" onchange="updateLayout()">
                 <option value="vertical">Vertical</option>
                 <option value="horizontal">Horizontal</option>
-                <option value="edit only">Edit Only</option>
-            </select> | <label>Font Size: <input type="number" id="fontSize" value="14" onchange="changeFontSize()" style="width:50px;"></label> |
-            <span onClick="update()">Update</span> |
-            <span onClick="goFullscreen()" >Fullscreen</span> |
-            <span onClick="render()" >Render</span> |
-            <span onClick="clearData()" >Clear</span> |
-            <select id="editorVisibility" onchange="toggleEditor()">
-                <option value="show">Show Editor</option>
-                <option value="hide">Hide Editor</option>
             </select> |
             <span onClick="toggleChat()">Chat</span> |
             <a href="https://github.com/no-gravity/html_editor"
-               target=_blank>Github</a> |
-            <a href="https://www.gibney.org" target="_blank">Made by MG</a></span>
+               target=_blank>Github</a>
         </div>
         <iframe id=resulframe></iframe>
 

@@ -15,71 +15,25 @@ function update()
     outty.close();
 };
 
-function goFullscreen()
-{
-    let outWin = window.open()
-    outWin.focus();
-    let outty = outWin.document;
-    outty.open();
-    let inny = document.getElementById("data");
-    outty.write(inny.value);
-    outty.close();
-}
-
 function realtime()
 {
     if (!document.querySelector("#realtime").checked) return;
     update();
 }
 
-function render() {
-    let outWin = window.open()
-    outWin.focus();
-    _render(outWin);
-}
-
-function clearData() {
-    document.querySelector('#data').value = '';
-    update();
-}
-
-function changeFontSize() {
-    var fontSizeInput = document.getElementById("fontSize");
-    var newSize = parseInt(fontSizeInput.value);
-    if(isNaN(newSize)) {
-        newSize = 14;
-    }
-    var textArea = document.getElementById("data");
-    textArea.style.fontSize = newSize + "px";
-}
-
 function updateLayout() {
     let layout = document.querySelector('#layout').value;
     if (layout === 'horizontal') {
         document.body.classList.add("horizontal");
-        document.body.classList.remove("edit_only");
-    } else if (layout === 'edit only') {
-        document.body.classList.add("edit_only");
-        document.body.classList.remove("horizontal");
     } else {
         document.body.classList.remove("horizontal");
-        document.body.classList.remove("edit_only");
     }
-}
-
-async function _render(outWin) {
-    let inny = document.querySelector("iframe").contentDocument.body;
-    let dataUrl = await domtoimage.toPng(inny);
-    let img = document.createElement('img');
-    img.src = dataUrl;
-    outWin.document.body.appendChild(img);
 }
 
 let dataArea = document.getElementById("data");
 dataArea.onkeyup = realtime;
 
 update();
-changeFontSize();
 
 function toggleChat() {
     const chatContainer = document.getElementById('chat-container');
@@ -131,20 +85,6 @@ document.getElementById('chat-input').addEventListener('keypress', function(e) {
         sendMessage();
     }
 });
-
-function toggleEditor() {
-    const editor = document.getElementById('data');
-    const resulframe = document.getElementById('resulframe');
-    const visibility = document.getElementById('editorVisibility').value;
-
-    if (visibility === 'hide') {
-        editor.style.display = 'none';
-        if (resulframe) resulframe.style.width = '100%';
-    } else {
-        editor.style.display = 'block';
-        if (resulframe) resulframe.style.width = '';
-    }
-}
 
 // Create WebSocket connection
 let ws = null;
