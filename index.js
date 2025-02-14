@@ -54,7 +54,7 @@ function sendMessage() {
     // Add user message to chat UI
     messagesDiv.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
 
-    // Add user message to history
+    // Add only user message to history
     conversationHistory.push({
         role: "user",
         content: message
@@ -101,19 +101,13 @@ function connectWebSocket() {
         document.getElementById('data').value += event.data;
         update();
 
-        // Store assistant's response in history once complete
-        if (!ws.isStreaming) {
-            conversationHistory.push({
-                role: "assistant",
-                content: event.data
-            });
-        }
-
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     };
 
     ws.onclose = function() {
         console.log('Disconnected from server');
+        // Reset currentResponse when connection closes
+        this.currentResponse = null;
         setTimeout(connectWebSocket, 5000);
     };
 }

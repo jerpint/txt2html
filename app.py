@@ -2,11 +2,12 @@ from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import uvicorn
-import html
 import json
+import dotenv
 
 from litellm import completion
-import os
+
+dotenv.load_dotenv()
 
 SYSTEM_PROMPT = """
 You are answering questions to a user using html.
@@ -60,15 +61,17 @@ async def websocket_endpoint(websocket: WebSocket):
             raw_html = payload['html']
             history = payload.get('history', [])  # Get conversation history
 
+            messages = [
+                {"content": SYSTEM_PROMPT, "role": "system"},
+                *history,
+                {"content": raw_html, "role": "assistant"},
+                {"content": message, "role": "user"},
+            ]
+
             # Get response using the message, raw HTML, and history
             response = completion(
                 model="openai/gpt-4o-mini",
-                messages=[
-                    {"content": SYSTEM_PROMPT, "role": "system"},
-                    *history,  # Include previous conversation
-                    {"content": raw_html, "role": "assistant"},
-                    {"content": message, "role": "user"},
-                ],
+                messages=messages,
                 stream=True,
             )
 
