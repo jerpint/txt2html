@@ -110,6 +110,8 @@ input[type="checkbox"] {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     z-index: 1000;
     border: 1px solid var(--border-color);
+    cursor: move;
+    user-select: none;
 }
 
 #chat-container .header {
@@ -118,6 +120,8 @@ input[type="checkbox"] {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: var(--control-bg);
+    border-radius: 12px 12px 0 0;
 }
 
 #chat-messages {
