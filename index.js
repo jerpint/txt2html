@@ -122,3 +122,8 @@ document.getElementById('chat-input').addEventListener('keypress', function(e) {
         sendMessage();
     }
 });
+
+// Add this line to set horizontal layout on page load
+document.addEventListener('DOMContentLoaded', () => {
+    updateLayout();
+});
