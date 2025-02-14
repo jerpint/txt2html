@@ -37,7 +37,20 @@ update();
 
 function toggleChat() {
     const chatContainer = document.getElementById('chat-container');
-    chatContainer.style.display = chatContainer.style.display === 'none' ? 'block' : 'none';
+    chatContainer.style.transition = 'opacity 0.3s ease';
+
+    if (chatContainer.style.display === 'none') {
+        chatContainer.style.display = 'block';
+        // Small delay to allow display change to take effect
+        setTimeout(() => {
+            chatContainer.style.opacity = '1';
+        }, 10);
+    } else {
+        chatContainer.style.opacity = '0';
+        setTimeout(() => {
+            chatContainer.style.display = 'none';
+        }, 300);
+    }
 }
 
 // Add conversation history array at the top level
