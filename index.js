@@ -41,7 +41,6 @@ function toggleChat() {
 
     if (chatContainer.style.display === 'none') {
         chatContainer.style.display = 'block';
-        // Small delay to allow display change to take effect
         setTimeout(() => {
             chatContainer.style.opacity = '1';
         }, 10);
@@ -141,66 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateLayout();
 });
 
-// Add drag functionality to chat container
-function makeDraggable(element) {
-    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    const header = element.querySelector('.header');
-
-    header.onmousedown = dragMouseDown;
-
-    function dragMouseDown(e) {
-        e = e || window.event;
-        e.preventDefault();
-        // Get the mouse cursor position at startup
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        // Call a function whenever the cursor moves
-        document.onmousemove = elementDrag;
-    }
-
-    function elementDrag(e) {
-        e = e || window.event;
-        e.preventDefault();
-        // Calculate the new cursor position
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-
-        // Get container boundaries
-        const containerRect = element.getBoundingClientRect();
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-
-        // Calculate new position
-        let newTop = element.offsetTop - pos2;
-        let newLeft = element.offsetLeft - pos1;
-
-        // Add boundary constraints
-        newTop = Math.max(0, Math.min(newTop, viewportHeight - containerRect.height));
-        newLeft = Math.max(0, Math.min(newLeft, viewportWidth - containerRect.width));
-
-        // Set the element's new position
-        element.style.top = newTop + "px";
-        element.style.left = newLeft + "px";
-    }
-
-    function closeDragElement() {
-        // Stop moving when mouse button is released
-        document.onmouseup = null;
-        document.onmousemove = null;
-    }
-}
-
-// Initialize draggable chat container when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    // ... existing DOMContentLoaded code ...
-
-    const chatContainer = document.getElementById('chat-container');
-    makeDraggable(chatContainer);
-});
-
 // Update toggleChat function to preserve position
 function toggleChat() {
     const chatContainer = document.getElementById('chat-container');
@@ -208,7 +147,6 @@ function toggleChat() {
 
     if (chatContainer.style.display === 'none') {
         chatContainer.style.display = 'block';
-        // Small delay to allow display change to take effect
         setTimeout(() => {
             chatContainer.style.opacity = '1';
         }, 10);
