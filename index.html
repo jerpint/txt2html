@@ -157,16 +157,22 @@
 
         <iframe id="resulframe"></iframe>
 
-        <div id="chat-container">
+        <div id="chat-input-container">
+            <div class="header">
+                <h3 style="margin: 0; font-weight: 600;">Chat</h3>
+            </div>
+            <div class="input-area">
+                <textarea id="chat-input" rows="3" placeholder="Ask anything..."></textarea>
+                <button class="send-button" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+
+        <div id="history-container">
             <div class="header">
                 <h3 style="margin: 0; font-weight: 600;">Conversation History</h3>
                 <span style="cursor: pointer;" onclick="toggleChat()">×</span>
             </div>
             <div id="chat-messages"></div>
-            <div class="chat-input-container">
-                <textarea id="chat-input" rows="3" placeholder="Ask anything..."></textarea>
-                <button class="send-button" onclick="sendMessage()">Send</button>
-            </div>
         </div>
 
         <div class="controls">

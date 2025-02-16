@@ -101,8 +101,8 @@ input[type="checkbox"] {
     accent-color: var(--primary-color);
 }
 
-/* Chat container styles */
-#chat-container {
+/* Chat input container styles */
+#chat-input-container {
     grid-area: chat;
     width: 100%;
     background: var(--bg-color);
@@ -111,12 +111,12 @@ input[type="checkbox"] {
     border: 1px solid var(--border-color);
     user-select: none;
     margin: 0;
-    height: 300px; /* Fixed height */
+    height: 150px; /* Reduced height for input area */
     display: flex;
     flex-direction: column;
 }
 
-#chat-container .header {
+#chat-input-container .header {
     padding: 8px 12px;
     border-bottom: 1px solid var(--border-color);
     display: flex;
@@ -126,62 +126,47 @@ input[type="checkbox"] {
     border-radius: 8px 8px 0 0;
 }
 
-#chat-messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 12px;
-    font-size: 14px;
-}
-
-#chat-messages p {
-    margin: 6px 0;
-    line-height: 1.4;
-}
-
-.chat-input-container {
+.input-area {
     padding: 8px 12px;
-    border-top: 1px solid var(--border-color);
     display: flex;
     gap: 8px;
     align-items: flex-start;
-}
-
-#chat-input {
     flex: 1;
-    padding: 8px;
+}
+
+/* History container styles */
+#history-container {
+    grid-area: history;
+    width: 100%;
+    background: var(--bg-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     border: 1px solid var(--border-color);
-    border-radius: 4px;
+    user-select: none;
     margin: 0;
-    font-family: inherit;
-    font-size: 14px;
-    resize: none;
-    height: 36px;
-    min-height: 36px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
 }
 
-.send-button {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    height: 36px;
-    transition: background-color 0.2s ease;
+#history-container .header {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--control-bg);
+    border-radius: 8px 8px 0 0;
 }
 
-.send-button:hover {
-    background: var(--secondary-color);
-}
-
-/* Layout styles */
+/* Update layout styles */
 body.horizontal {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr auto auto;
+    grid-template-rows: 1fr auto auto auto;
     grid-template-areas:
         "textarea iframe"
         "chat iframe"
+        "history iframe"
         "controls controls";
 }
 
