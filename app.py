@@ -14,8 +14,8 @@ You are answering questions to a user using html.
 You will respond using valid html code.
 Your code gets rendered in real time to a user.
 It should be helpful and contain the answer to their question.
-You might also be given context, include the context in the html.
-Do not include any other text than the html. Do not add ```html or ```.
+You might also be given the previous history of the conversation, consider it in your response.
+Do not include any other text than the html. Do not add ```html or ``` when responding.
 The html will be directly rendered to the user.
 Include any css in the html directly.
 """

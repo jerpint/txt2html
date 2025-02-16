@@ -106,6 +106,10 @@ function connectWebSocket() {
 
     ws.onopen = function() {
         console.log('Connected to server');
+        // Add connection message to chat
+        const messagesDiv = document.getElementById('chat-messages');
+        messagesDiv.innerHTML += `<p><em>Connected to server</em></p>`;
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
     };
 
     ws.onmessage = function(event) {
