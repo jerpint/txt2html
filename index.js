@@ -1,7 +1,6 @@
 // We need to create a new iframe on every update, so that the JS state does not stick around. Example of a problem that would cause: When defining a variable in the top scope with "let", the second update fails.
 function update()
 {
-    if (document.querySelector('#layout').value === 'edit only') return;
     let newIframe = document.createElement('iframe');
     document.body.replaceChild(
         newIframe,
@@ -19,15 +18,6 @@ function realtime()
 {
     if (!document.querySelector("#realtime").checked) return;
     update();
-}
-
-function updateLayout() {
-    let layout = document.querySelector('#layout').value;
-    if (layout === 'horizontal') {
-        document.body.classList.add("horizontal");
-    } else {
-        document.body.classList.remove("horizontal");
-    }
 }
 
 let dataArea = document.getElementById("data");
@@ -137,11 +127,6 @@ document.getElementById('chat-input').addEventListener('keypress', function(e) {
         e.preventDefault(); // Prevent default newline
         sendMessage();
     }
-});
-
-// Add this line to set horizontal layout on page load
-document.addEventListener('DOMContentLoaded', () => {
-    updateLayout();
 });
 
 // Update toggleChat function to preserve position
