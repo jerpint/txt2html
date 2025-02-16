@@ -3,12 +3,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>HTML Editor</title>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code&display=swap" rel="stylesheet">
         <link href="index.css" rel="stylesheet">
     </head>
     <body>
-        <div class="title"></div>
+
+
         <textarea id="data"><!doctype html>
 <html>
  <body>
@@ -52,6 +52,10 @@
 
         <iframe id="resulframe"></iframe>
 
+        <div id="about">
+            <h1>txt2html</h1>
+            <p>This is a chat history. It's not actually used for anything.</p>
+        </div>
         <div id="chat-input-container">
             <div class="header">
                 <h3>Chat</h3>
@@ -65,7 +69,6 @@
         <div id="history-container">
             <div class="header">
                 <h3>Conversation History</h3>
-                <span onclick="toggleChat()">×</span>
             </div>
             <div id="chat-messages"></div>
         </div>
