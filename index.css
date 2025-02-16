@@ -25,11 +25,10 @@ body {
     height: 100vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 5fr auto auto auto;
+    grid-template-rows: 5fr auto auto;
     grid-template-areas:
         "textarea iframe"
-        "history iframe"
-        "chat iframe"
+        "history chat"
         "controls controls";
     gap: 20px;
 }
