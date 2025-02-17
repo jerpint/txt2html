@@ -92,6 +92,7 @@ document.getElementById('chat-input').addEventListener('keypress', function(e) {
 let ws = null;
 
 function connectWebSocket() {
+    // change this line to connect to the remote server
     ws = new WebSocket('ws://localhost:8000/ws');
 
     ws.onopen = function() {

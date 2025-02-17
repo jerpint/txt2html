@@ -10,6 +10,8 @@ from litellm import completion
 
 dotenv.load_dotenv()
 
+deployed_env = os.getenv("DEPLOYED_ENV", False) == "true" # Check if we're in production
+
 SYSTEM_PROMPT = """
 You are answering questions to a user using html.
 You will respond using valid html code.
@@ -44,13 +46,33 @@ def get_response(message, raw_html):
 
 app = FastAPI()
 
-# Enable CORS
+# Set allowed origins based on the environment, by default we're in development
+if deployed_env:
+    allowed_origins = [
+        "https://www.jerpint.io",
+    ]
+else:
+    allowed_origins = [
+        "http://localhost:4000",
+    ]
+
+print(f"Allowed origins: {allowed_origins}")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["localhost:4000", "www.jerpint.io"],  # In production, replace with your frontend domain
+    allow_origins=allowed_origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "CONNECT"],
+    allow_headers=[
+        "Content-Type",
+        "Authorization",
+        "Upgrade",
+        "Connection",
+        "Sec-WebSocket-Key",
+        "Sec-WebSocket-Version",
+        "Sec-WebSocket-Extensions",
+        "Sec-WebSocket-Protocol"
+    ],
 )
 
 # Store active WebSocket connections
@@ -99,4 +121,5 @@ async def websocket_endpoint(websocket: WebSocket):
 app.mount("/", StaticFiles(directory=".", html=True), name="static")
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=not deployed_env)
