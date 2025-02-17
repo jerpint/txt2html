@@ -2,3 +2,4 @@ fastapi
 litellm
 python-dotenv
 openai
+gunicorn
