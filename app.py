@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -16,14 +17,22 @@ Your code gets rendered in real time to a user.
 It should be helpful and contain the answer to their question.
 You might also be given the previous history of the conversation, consider it in your response.
 Do not include any other text than the html. Do not add ```html or ``` when responding.
+Change the layout and style of the html to be more appealing.
+Ignore the html styling on the first message as its just an example.
+You have about half a page-width to work with.
 Don't be afraid to be creative.
 The html will be directly rendered to the user.
 Include any css in the html directly.
 """
 
+model = "openai/gpt-4o-mini"
+
+if model.startswith("openai/"):
+    assert os.getenv("OPENAI_API_KEY"), "OPENAI_API_KEY is not set"
+
 def get_response(message, raw_html):
     response = completion(
-        model="openai/gpt-4o-mini",
+        model=model,
         messages=[
             {"content": SYSTEM_PROMPT, "role": "system"},
             {"content": raw_html,"role": "assistant"},
@@ -38,7 +47,7 @@ app = FastAPI()
 # Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with your frontend domain
+    allow_origins=["localhost:4000", "www.jerpint.io"],  # In production, replace with your frontend domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
