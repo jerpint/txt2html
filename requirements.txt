@@ -3,3 +3,4 @@ litellm
 python-dotenv
 openai
 gunicorn
+uvicorn
